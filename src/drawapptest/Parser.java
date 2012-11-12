@@ -3,6 +3,7 @@ package drawapptest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 import javafx.scene.paint.Color;
 
@@ -11,6 +12,7 @@ public class Parser
     private BufferedReader reader; 
     private ImagePanel image;
     private MainWindow frame;
+    private ArrayList<String> storeCommands = new ArrayList<String>();
     
     public Parser(Reader reader, ImagePanel image, MainWindow frame)
     {
@@ -48,7 +50,19 @@ public class Parser
     
     private void parseLine(String line) throws ParseException
     {
-        if (line.length() < 2) return;
+        storeCommands.addAll(Arrays.asList( new String[7]));
+        storeCommands.add(0, "DL");
+        storeCommands.add(1, "DR");
+        storeCommands.add(2, "FR");
+        storeCommands.add(3, "SC");
+        storeCommands.add(4, "DS");
+        storeCommands.add(5, "DA");
+        storeCommands.add(6, "D0");
+        
+       // storeCommands.add("DL", "DR", "FR", "SC", "DS", "DA", "DO");
+        
+
+        if (line.length() < 2) return; // not a valid cmmd
         
         String command = line.substring(0, 2);
         
@@ -94,7 +108,13 @@ public class Parser
             return;
         }
         
-        throw new ParseException("Unknown drawing command");
+        throw new ParseException("Unknown drawing command"); // show input
+    }
+
+    private void addToArrayList()
+    {
+        int counter = 0; 
+        
     }
     
     private void drawLine(String args) throws ParseException
@@ -282,7 +302,7 @@ public class Parser
         if (tokenizer.hasMoreTokens())
             return Integer.parseInt(tokenizer.nextToken());
         else
-            throw new ParseException("Missing Integer value");
+            throw new ParseException("Missing Integer value"); //improve specifiy 
   }
     
 }
