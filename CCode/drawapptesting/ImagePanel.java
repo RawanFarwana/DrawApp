@@ -1,28 +1,46 @@
-package drawapptest;
+package drawapptesting;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.*;
+import javafx.scene.paint.*;
+import javafx.scene.canvas.*;
+
+
 
 public class ImagePanel
 {
-    private Canvas canvas; 
+    private Canvas image;
     private GraphicsContext gc;
     
-    public ImagePanel(Canvas c)
+    public ImagePanel(int width, int height)
     {
-      this.canvas = c; 
-      gc = c.getGraphicsContext2D();
+        setImageSize(width, height);
     }
+    
+    private void setImageSize(int width, int height)
+    {
+        gc =image.getGraphicsContext2D();
+        image.setWidth(width);
+        image.setHeight(height);
+        clear(Color.WHITE);
+        
+        Group root = new Group();
+        
+
+        root.getChildren().add(image);
+    }
+    
     
     protected void paintComponent(GraphicsContext gc)
     {
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());   
+        gc.fillRect(0, 0, image.getWidth(), image.getHeight());   
     }
     
     public void setBackgroundColour(Color colour)
     {
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());   
+        gc.fillRect(0, 0, image.getWidth(), image.getHeight());   
     }
     
     public void clear(Color colour)
@@ -64,4 +82,8 @@ public class ImagePanel
     {
         gc.strokeOval(x, y, width, height);
     }
+    
+    
+    
+    
 }

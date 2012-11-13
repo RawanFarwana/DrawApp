@@ -1,9 +1,8 @@
-package drawapptest;
+package drawapptesting;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 import javafx.scene.paint.Color;
 
@@ -12,9 +11,8 @@ public class Parser
     private BufferedReader reader; 
     private ImagePanel image;
     private MainWindow frame;
-    private ArrayList<String> storeCommands = new ArrayList<String>();
     
-    public Parser(Reader reader, ImagePanel image, MainWindow frame)
+    public Parser(Reader reader, MainWindow frame)
     {
         this.reader = new BufferedReader(reader);
         this.image = image;
@@ -25,21 +23,26 @@ public class Parser
     {
         try
         {
-          String line = reader.readLine();
-          System.out.println(line);
+            /*String line = reader.readLine();
             while(line!=null)
             {
                 parseLine(line);
                 line = reader.readLine();
-            }
+            }*/
+
+		String[] commands = {"DR 0 0 100 50"};
+
+		for(String s : commands) {
+			parseLine(s);
+		}
            
         }
  
-      catch(IOException e)
+       /* catch(IOException e)
         {
             frame.postMessage("Parse failed.");
             return;
-        }
+        }*/
         
        catch(ParseException e)
         {
@@ -49,40 +52,9 @@ public class Parser
         frame.postMessage("Drawing completed");
     }
     
-    
-    public int parseStepByStep()
-    {
-        try
-        {
-        String line = reader.readLine();
-        //if there is nothing there, abnormal exit
-        if (line == null)
-            {
-                System.out.println("End of input reached");
-                return -1;  
-            }
-        System.out.println(line);
-        parseLine(line);
-        }
-    
-     catch(IOException e)
-        {
-            frame.postMessage("Parse failed.");
-            return 0;
-        }
-        
-       catch(ParseException e)
-        {
-            frame.postMessage("Parse Exception: " + e.getMessage());
-            return 0;
-        } 
-        frame.postMessage("Step completed");
-        return 0;        
-    }
-    
     private void parseLine(String line) throws ParseException
     {
-        if (line.length() < 2) return; // not a valid cmmd
+        if (line.length() < 2) return;
         
         String command = line.substring(0, 2);
         
@@ -128,13 +100,7 @@ public class Parser
             return;
         }
         
-        throw new ParseException("Unknown drawing command"); // show input
-    }
-
-    private void addToArrayList()
-    {
-        int counter = 0; 
-        
+        throw new ParseException("Unknown drawing command");
     }
     
     private void drawLine(String args) throws ParseException
@@ -236,7 +202,6 @@ public class Parser
     
   private void setColour(String colourName) throws ParseException
   {
-      
       if(colourName.equals("black"))
       {
           image.setColour(Color.BLACK);
@@ -323,7 +288,7 @@ public class Parser
         if (tokenizer.hasMoreTokens())
             return Integer.parseInt(tokenizer.nextToken());
         else
-            throw new ParseException("Missing Integer value"); //improve specifiy 
+            throw new ParseException("Missing Integer value");
   }
     
 }

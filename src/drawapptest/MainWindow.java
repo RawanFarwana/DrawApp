@@ -12,6 +12,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -26,40 +28,81 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+
 public class MainWindow extends Application
 { 
 
-Group drawing=new Group();
+
 Random randomgenerator=new Random();
 private ImagePanel imagePanel;
 private Scene scene;
 private TextArea messageView;
+Canvas canvas;
+
+
+Reader reader;
+Parser parser;
 
 BorderPane borderPane = new BorderPane();
 
-private void buildGUI()
+private void buildGUI()  
 { 
-
-scene = new Scene(borderPane, 500, 300);
-messageView = new TextArea(); 
-messageView.setPrefRowCount(6);
-messageView.setEditable(false);
-ScrollPane scrollPane = new ScrollPane();
-scrollPane.setContent(messageView);
-Button quitButton = new Button("Close Window");
+     
+     
+    scene = new Scene(borderPane, 1000, 600);
+    
+    canvas = new Canvas(500, 300);
+    
+    messageView = new TextArea(); 
+    messageView.setPrefRowCount(6);
+    messageView.setEditable(false);
+    
+    ScrollPane scrollPane = new ScrollPane();
+    scrollPane.setContent(messageView);
+    Button quitButton = new Button("Close Window");
   
-quitButton.setOnAction(new EventHandler<ActionEvent>() {
+    quitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Platform.exit();
+                Platform.exit();   
             }
         });
+    
+    Button everything = new Button("RunEverything");
+    
+   //Every time this button is called, parse is called 
+    everything.setOnAction(new EventHandler<ActionEvent>(){
+        @Override
+        public void handle(ActionEvent event)
+        {
+            
+            parser.parse();
+        }
+    });
+    
+    Button stepByStep = new Button("stepByStep");
+    
+   //Every time this button is called, parse is called 
+    stepByStep.setOnAction(new EventHandler<ActionEvent>(){
+        @Override
+        public void handle(ActionEvent event)
+        {
+            parser.parseStepByStep();
+        }
+    });
 
-borderPane.setTop(drawing);
-borderPane.setCenter(scrollPane);
-borderPane.setBottom(quitButton);
-BorderPane.setAlignment(quitButton, Pos.CENTER);
-BorderPane.setMargin(drawing, new Insets(50));
+    borderPane.setTop(canvas);
+    borderPane.setCenter(scrollPane);
+    borderPane.setLeft(stepByStep);
+    borderPane.setBottom(quitButton);
+    borderPane.setRight(everything);
+    
+    
+    BorderPane.setAlignment(quitButton, Pos.BOTTOM_CENTER);
+    BorderPane.setAlignment(stepByStep, Pos.BOTTOM_RIGHT);
+    BorderPane.setAlignment(everything, Pos.BOTTOM_LEFT);
+    
+    BorderPane.setMargin(canvas, new Insets(50));
 }
 
 public ImagePanel getImagePanel()
@@ -72,49 +115,6 @@ public void postMessage(final String s)
 messageView.setText(s);
 }
 
-
-private Node petals() {
-
-double R=randomgenerator.nextDouble();
-double B=randomgenerator.nextDouble();
-double G=randomgenerator.nextDouble();
-
-Group petals = new Group();
-
-int r=0;
-for(int i=0; i<10;i++){
-Ellipse petal = new Ellipse(150,30,10, 20);
-petal.setStroke(Color.ORANGE);
-petal.setFill(Color.color(R, G, B, 0.5D));
-petal.getTransforms().add(new Rotate(r, 150, 50));
-
-r+=35;
-
-petals.getChildren().add(petal);
-}
-return petals;
-}
-
-private Node whorl() {
-
-Circle whorl = new Circle(150,50,10);
-whorl.setFill(Color.YELLOW);
-
-return whorl;
-} 
-
-private Group Flower(){
-Group root = new Group();
-
-Node petals_node = petals();
-Node whorl_node=whorl();
-
-root.getChildren().add(petals_node);
-root.getChildren().add(whorl_node);
-
-return root;
-}
-
 @Override
 public void start(Stage primaryStage) throws Exception {
 
@@ -123,19 +123,13 @@ primaryStage.setResizable(false);
 primaryStage.setScene(scene);
 primaryStage.setTitle("DrawApp");
 
-Group Fl=Flower();
-Group Fl2=Flower();
-Group Fl3=Flower();
-Fl2.setTranslateX(150);
-Fl3.setTranslateX(300);
-drawing.getChildren().addAll(Fl,Fl2,Fl3);
 
-
-/* Reader reader = new InputStreamReader(System.in);
-Parser parser = new Parser(reader, imagePanel, this);
-parser.parse();
-*/
 primaryStage.show();
+reader = new InputStreamReader(System.in);
+imagePanel = new ImagePanel(canvas);
+parser = new Parser(reader, imagePanel, this);
+//parser.parse();
+
 //stage.setVisible(true);
 }
 
