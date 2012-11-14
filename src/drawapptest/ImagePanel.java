@@ -2,17 +2,22 @@ package drawapptest;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Polygon;
 
 public class ImagePanel
 {
-    private Canvas canvas; 
-    private GraphicsContext gc;
+    Canvas canvas; 
+    GraphicsContext gc;
     
     public ImagePanel(Canvas c)
     {
-      this.canvas = c; 
-      gc = c.getGraphicsContext2D();
+        this.canvas = c;
+        gc = c.getGraphicsContext2D();
     }
     
     protected void paintComponent(GraphicsContext gc)
@@ -35,6 +40,15 @@ public class ImagePanel
         gc.setFill(colour);
     }
     
+    public void setColourGradient(Color colour1, Color colour2)
+    {
+        RadialGradient rg = new RadialGradient(0,0,0,0,1,true, CycleMethod.NO_CYCLE, new Stop[]{
+             new Stop(0,colour1),
+             new Stop(1,colour2)
+         });
+        gc.setFill(rg);
+    }
+    
     public void drawLine(int x1, int y1, int x2, int y2)
     {
         gc.strokeLine(x1, y1, x2, y2);
@@ -50,7 +64,7 @@ public class ImagePanel
         gc.fillRect(x1, y1, x2, y2);
     }
     
-    public void strokeText(int x, int y, String s)
+    public void drawString(int x, int y, String s)
     {
         gc.strokeText(s, x, y);
     }
@@ -63,5 +77,17 @@ public class ImagePanel
     public void drawOval(int x, int y, int width, int height)
     {
         gc.strokeOval(x, y, width, height);
+    }
+    
+    public void drawImage(String pathWay, int x, int y, int width, int height)
+    {
+       Image image = new Image(pathWay);
+       gc.drawImage(image, x, y, width, height);
+      
+    }
+    
+    public void fillOval(int x, int y, int width, int height)
+    {
+        gc.fillOval(x, y, width, height);
     }
 }
