@@ -80,14 +80,14 @@ public class ImagePanel
     }
     
     public void drawImage(String pathWay, int x, int y, int width, int height)
-    {
+    {  
        Image image = new Image(pathWay);
-       gc.drawImage(image, x, y, width, height);
+       gc.drawImage(image,x,y,width,height);
       
     }
     
-    public void fillOval(int x, int y, int width, int height)
+    public void fillOval(double x, double y, double width, double height)
     {
-        gc.fillOval(x, y, width, height);
+       gc.fillOval(x, y, width, height);
     }
 }

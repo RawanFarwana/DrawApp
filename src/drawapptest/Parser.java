@@ -201,19 +201,6 @@ public class Parser
         image.fillRect(x1, y1, x2, y2);
     }
     
-    private void setColourGradient(String colours) throws ParseException
-    {
-        String colour1 = ""; 
-        String colour2 = ""; 
-        
-        StringTokenizer tokenizer = new StringTokenizer(colours);
-        
-        colour1 = getString(tokenizer);
-        colour2 = getString(tokenizer);
-        
-        image.setColourGradient(getColour(colour1), getColour(colour2));
-    }
-    
     private void drawArc(String args) throws ParseException
     {
         int x = 0;
@@ -249,6 +236,22 @@ public class Parser
         height = getInteger(tokenizer);
         
         image.drawOval(x1, y1, width, height);
+    }
+    
+       private void fillOval(String args) throws ParseException 
+    {
+        double x = 0.0; 
+        double y = 0.0; 
+        double width = 0.0; 
+        double height = 0.0; 
+        
+        StringTokenizer tokenizer = new StringTokenizer(args);
+        x = getDouble(tokenizer);
+        y = getDouble(tokenizer);
+        width = getDouble(tokenizer);
+        height = getDouble(tokenizer);
+        
+        image.fillOval(x, y, width, height);
     }
     
     private void drawString(String args) throws ParseException
@@ -289,24 +292,15 @@ public class Parser
         height = getInteger(tokenizer);
         pathWay = getString(tokenizer);
         
+        int position = args.indexOf('@');
+        if (position == -1) throw new ParseException("Image path is missing");
+        pathWay = args.substring(position + 1);
+
+        System.out.println(pathWay + "" + x + "" + y + "" +width+ "" + height);
         image.drawImage(pathWay, x, y, width, height);
     }
     
-    private void fillOval(String args) throws ParseException 
-    {
-        int x = 0; 
-        int y = 0; 
-        int width = 0; 
-        int height = 0; 
-        
-        StringTokenizer tokenizer = new StringTokenizer(args);
-        x = getInteger(tokenizer);
-        y = getInteger(tokenizer);
-        width = getInteger(tokenizer);
-        height = getInteger(tokenizer);
-        
-        image.fillOval(x, y, width, height);
-    }
+ 
     
     private void setColour(String colourName) throws ParseException
     {
@@ -336,6 +330,19 @@ public class Parser
         }
     }
     
+   private void setColourGradient(String colours) throws ParseException
+    {
+        String colour1 = ""; 
+        String colour2 = ""; 
+        
+        StringTokenizer tokenizer = new StringTokenizer(colours);
+        
+        colour1 = getString(tokenizer);
+        colour2 = getString(tokenizer);
+        
+        image.setColourGradient(getColour(colour1), getColour(colour2));
+    }
+    
     private int getInteger(StringTokenizer tokenizer) throws ParseException
     {
         if (tokenizer.hasMoreTokens()) return Integer.parseInt(tokenizer.nextToken());
@@ -346,5 +353,10 @@ public class Parser
     {
         if (tokenizer.hasMoreTokens()) return tokenizer.nextToken();
         else throw new ParseException("Missing String value");
+    }
+
+    private double getDouble(StringTokenizer tokenizer) {
+        if(tokenizer.hasMoreTokens()) return Double.parseDouble(tokenizer.nextToken());
+        throw new UnsupportedOperationException("Missing Double Value");
     }
 }
