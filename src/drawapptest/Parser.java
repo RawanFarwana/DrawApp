@@ -89,60 +89,70 @@ public class Parser
         
         if (command.equals("DL"))
         {
+            System.out.println(line);
             drawLine(line.substring(2,line.length())); 
             return; 
         }
         
         if (command.equals("DR"))
         {
+            System.out.println(line);
             drawRect(line.substring(2, line.length()));
             return;
         }
         
         if (command.equals("FR"))
         {
+            System.out.println(line);
             fillRect(line.substring(2, line.length()));
             return;
         }
         
         if (command.equals("SC"))
         {
+            System.out.println(line);
             setColour(line.substring(3, line.length()));
             return;
         }
         
         if (command.equals("DS"))
         {
+            System.out.println(line);
             drawString(line.substring(3, line.length()));
             return;
         }
         
         if (command.equals("DA"))
         {
+            System.out.println(line);
             drawArc(line.substring(2, line.length()));
             return;
         }
         
         if (command.equals("DO"))
         {
+            System.out.println(line);
             drawOval(line.substring(2, line.length()));
             return;
         }
         
         if (command.equals("CG"))
         {
+            System.out.println(line);
             setColourGradient(line.substring(3, line.length()));
             return;
         }
         
         if(command.equals("DI"))
         {
+            System.out.println(line);
             drawImage(line.substring(2, line.length()));
             return;
         }
         
         if(command.equals("FO"))
         {
+            System.out.println(line);
             fillOval(line.substring(2, line.length()));
             return;
         }
@@ -164,6 +174,7 @@ public class Parser
         x2 = getInteger(tokenizer);
         y2 = getInteger(tokenizer);
         
+        System.out.println("DL" + x1 + "" + y1 + "" + x2 + "" + y2);
         image.drawLine(x1,y1,x2,y2);
     }
     
@@ -181,6 +192,7 @@ public class Parser
         x2 = getInteger(tokenizer);
         y2 = getInteger(tokenizer);
         
+        System.out.println("DR" + x1 + "" + y1 + "" + x2 + "" + y2);
         image.drawRect(x1,y1,x2,y2);
     }
     
@@ -198,6 +210,7 @@ public class Parser
         x2 = getInteger(tokenizer);
         y2 = getInteger(tokenizer);
         
+        System.out.println("FR" + x1 + "" + y1 + "" + x2 + "" + y2);
         image.fillRect(x1, y1, x2, y2);
     }
     
@@ -218,6 +231,7 @@ public class Parser
         startAngle = getInteger(tokenizer);
         arcAngle = getInteger(tokenizer);
         
+        System.out.println("DA" + x + "" + y + "" + width + "" + height + "" + startAngle + "" + arcAngle);
         image.drawArc(x, y, width, height, startAngle, arcAngle);
     }
     
@@ -235,6 +249,7 @@ public class Parser
         width = getInteger(tokenizer);
         height = getInteger(tokenizer);
         
+        System.out.println("DO" + x1 + "" + y1 + "" + width + "" + height);
         image.drawOval(x1, y1, width, height);
     }
     
@@ -251,6 +266,7 @@ public class Parser
         width = getDouble(tokenizer);
         height = getDouble(tokenizer);
         
+        System.out.println("FO" + x + "" + y + "" + width + "" + height);
         image.fillOval(x, y, width, height);
     }
     
@@ -272,6 +288,7 @@ public class Parser
         
         s = args.substring(position+1,args.length());
     
+        System.out.println("DS" + x + "" + y + "" +s);
         image.drawString(x,y,s);
     }
     
@@ -296,7 +313,7 @@ public class Parser
         if (position == -1) throw new ParseException("Image path is missing");
         pathWay = args.substring(position + 1);
 
-        System.out.println(pathWay + "" + x + "" + y + "" +width+ "" + height);
+        System.out.println("DI" + pathWay + "" + x + "" + y + "" +width+ "" + height);
         image.drawImage(pathWay, x, y, width, height);
     }
     
@@ -304,6 +321,7 @@ public class Parser
     
     private void setColour(String colourName) throws ParseException
     {
+        System.out.println("SC" + colourName);
         image.setColour(getColour(colourName));
         
         throw new ParseException("Invalid colour name");
@@ -340,6 +358,7 @@ public class Parser
         colour1 = getString(tokenizer);
         colour2 = getString(tokenizer);
         
+        System.out.println("CG" + colour1 + "" + colour2);
         image.setColourGradient(getColour(colour1), getColour(colour2));
     }
     
