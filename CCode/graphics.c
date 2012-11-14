@@ -31,9 +31,9 @@ void drawString(char* s, int x, int y)
   printf("DS %i %i @%s\n",x,y,s);
 }
 
-void drawImage(char* pathWay,int x, int y, int width, int height)
+void drawImage(int x, int y, int width, int height, char* pathWay)
 {
-  printf("DI %s %i %i %i %i\n",pathWay, x,y,width,height);
+  printf("DI %i %i %i %i %s\n", x,y,width,height,pathWay);
 }
 
 void fillOval(double x, double y, double width, double height)
