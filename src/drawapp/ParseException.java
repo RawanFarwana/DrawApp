@@ -1,4 +1,4 @@
-package drawapptest;
+package drawapp;
 
 public class ParseException extends Exception
 {

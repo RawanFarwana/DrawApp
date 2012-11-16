@@ -1,4 +1,4 @@
-package drawapptest;
+package drawapp;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,11 +13,19 @@ public class ImagePanel
 {
     Canvas canvas; 
     GraphicsContext gc;
+    private TurtleMode turtleMode;
     
     public ImagePanel(Canvas c)
     {
         this.canvas = c;
         gc = c.getGraphicsContext2D();
+        turtleMode = new TurtleMode(gc);
+    }
+     
+    public void setSize(int width, int height)
+    {
+        canvas.setWidth(width);
+        canvas.setHeight(height);
     }
     
     protected void paintComponent(GraphicsContext gc)
@@ -89,5 +97,10 @@ public class ImagePanel
     public void fillOval(double x, double y, double width, double height)
     {
        gc.fillOval(x, y, width, height);
+    }
+
+    public TurtleMode getTurtleMode()
+    {
+        return turtleMode;
     }
 }

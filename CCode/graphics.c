@@ -1,6 +1,31 @@
 #include <stdio.h>
 #include "graphics.h"
 
+void setPosition(int x, int y)
+{
+  printf("TP %i %i\n", x,y);
+}
+
+void moveForward(int distance)
+{
+  printf("TM %i\n", distance);
+}
+
+void turnLeft(int angle)
+{
+  printf("TL %i\n", angle);
+}
+
+void turnRight(int angle)
+{
+  printf("TR %i\n", angle);
+}
+
+void setSize(int width, int height)
+{
+  printf("SS %i %i\n", width, height);
+}
+
 void drawLine(int x1, int x2, int x3, int x4)
 {
   printf("DL %i %i %i %i\n", x1, x2, x3, x4);
@@ -33,7 +58,7 @@ void drawString(char* s, int x, int y)
 
 void drawImage(int x, int y, int width, int height, char* pathWay)
 {
-  printf("DI %i %i %i %i %s\n", x,y,width,height,pathWay);
+  printf("DI %i %i %i %i @%s\n", x,y,width,height,pathWay);
 }
 
 void fillOval(double x, double y, double width, double height)

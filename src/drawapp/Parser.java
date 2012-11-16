@@ -1,4 +1,4 @@
-package drawapptest;
+package drawapp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -155,9 +155,57 @@ public class Parser
             System.out.println(line);
             fillOval(line.substring(2, line.length()));
             return;
+        } 
+        
+          if(command.equals("SS"))
+        {
+            System.out.println(line);
+            setSize(line.substring(2, line.length()));
+            return;
+        }
+          
+        if(command.equals("TP"))
+        {
+            System.out.println(line);
+            setPosition(line.substring(2, line.length()));
+            return;
         }
         
+        if(command.equals("TM"))
+        {
+            System.out.println(line);
+            moveForward(line.substring(2, line.length()));
+            return;
+        }
+        
+        if(command.equals("TL"))
+        {
+            System.out.println(line);
+            turnLeft(line.substring(2, line.length()));
+            return;
+        }
+        
+        if(command.equals("TR"))
+        {
+            System.out.println(line);
+            turnRight(line.substring(2, line.length()));
+            return;
+        }
+          
         throw new ParseException("Unknown drawing command"); 
+    }
+    
+    private void setSize(String args) throws ParseException
+    {
+        int width = 0; 
+        int height = 0; 
+        
+        StringTokenizer tokenizer = new StringTokenizer(args);
+        
+        width = getInteger(tokenizer);
+        height = getInteger(tokenizer);
+        
+        image.setSize(width, height);
     }
     
     private void drawLine(String args) throws ParseException
@@ -307,17 +355,14 @@ public class Parser
         y = getInteger(tokenizer);
         width = getInteger(tokenizer);
         height = getInteger(tokenizer);
-        pathWay = getString(tokenizer);
         
         int position = args.indexOf('@');
         if (position == -1) throw new ParseException("Image path is missing");
         pathWay = args.substring(position + 1);
 
-        System.out.println("DI" + pathWay + "" + x + "" + y + "" +width+ "" + height);
+        System.out.println("DI" + "" + pathWay + "" + x + "" + y + "" +width+ "" + height);
         image.drawImage(pathWay, x, y, width, height);
     }
-    
- 
     
     private void setColour(String colourName) throws ParseException
     {
@@ -377,5 +422,51 @@ public class Parser
     private double getDouble(StringTokenizer tokenizer) {
         if(tokenizer.hasMoreTokens()) return Double.parseDouble(tokenizer.nextToken());
         throw new UnsupportedOperationException("Missing Double Value");
+    }
+
+    private void setPosition(String args) throws ParseException
+    {
+       int x = 0; 
+       int y = 0; 
+       
+       StringTokenizer tokenizer = new StringTokenizer(args);
+       
+       x = getInteger(tokenizer);
+       y = getInteger(tokenizer);
+      
+       image.getTurtleMode().setPosition(x, y);
+    }
+
+    private void moveForward(String args) throws ParseException
+    {
+        int distance = 0; 
+        
+        StringTokenizer tokenizer = new StringTokenizer(args);
+        
+        distance = getInteger(tokenizer);
+        
+        image.getTurtleMode().moveForward(distance);        
+    }
+
+    private void turnLeft(String args) throws ParseException
+    {
+        int angle = 0;
+        
+        StringTokenizer tokenizer = new StringTokenizer(args);
+        
+        angle = getInteger(tokenizer);
+        
+        image.getTurtleMode().turnLeft(angle);    
+    }
+
+    private void turnRight(String args) throws ParseException
+    {
+        int angle = 0;
+        
+        StringTokenizer tokenizer = new StringTokenizer(args);
+        
+        angle = getInteger(tokenizer);
+        
+        image.getTurtleMode().turnRight(angle);    
     }
 }
