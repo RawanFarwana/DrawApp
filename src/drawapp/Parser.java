@@ -3,13 +3,8 @@ package drawapp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
 
 public class Parser 
 {
@@ -24,7 +19,7 @@ public class Parser
         this.frame = frame;
     }
     
-    public void parse()
+    public void parse() //Called if runAllBtn is pressed
     {
         try
         {
@@ -49,10 +44,10 @@ public class Parser
             return;
         } 
         
-        frame.postMessage("Drawing completed");
+        frame.postMessage("(Run Everything) Drawing completed");
     }
     
-    public int parseStepByStep()
+    public int parseStepByStep() //Called if runStepByStepBtn is pressed
     {
         try
         {
@@ -60,8 +55,8 @@ public class Parser
             
             if (line == null)
             {
-                System.out.println("End of input reached");
-                return -1;  
+                System.out.println("No more lines to execute");
+                return -1;  //!!!!!!!!!!!!!!!!
             }
             parseLine(line);
         }
@@ -77,7 +72,7 @@ public class Parser
             frame.postMessage("Parse Exception: " + e.getMessage());
             return 0;
         } 
-        frame.postMessage("Step completed");
+        frame.postMessage("(StepByStep) Drawing completed");
         return 0;
     }
     
@@ -87,112 +82,28 @@ public class Parser
         
         String command = line.substring(0, 2);
         
-        if (command.equals("DL"))
-        {
-            System.out.println(line);
-            drawLine(line.substring(2,line.length())); 
-            return; 
-        }
+        /** Essential Features **/
+        if (command.equals("DL")) { drawLine(line.substring(2,line.length())); return; }
+        if (command.equals("DR")) { drawRect(line.substring(2, line.length())); return; }
+        if (command.equals("FR")) { fillRect(line.substring(2, line.length())); return; }
+        if (command.equals("SC")) { setColour(line.substring(3, line.length())); return; }
+        if (command.equals("DS")) { drawString(line.substring(3, line.length())); return; }
+        if (command.equals("DA")) { drawArc(line.substring(2, line.length())); return; }
+        if (command.equals("DO")) { drawOval(line.substring(2, line.length())); return; }
+        if (command.equals("CG")) { setColourGradient(line.substring(3, line.length())); return; }
+        if(command.equals("DI")) { drawImage(line.substring(2, line.length())); return; }
+        if(command.equals("SS")) { setSize(line.substring(2, line.length())); return; }
         
-        if (command.equals("DR"))
-        {
-            System.out.println(line);
-            drawRect(line.substring(2, line.length()));
-            return;
-        }
+        /** TurtleGraphics Features **/
+        if(command.equals("TP")) { setPosition(line.substring(2, line.length())); return; }
+        if(command.equals("TM")) { moveForward(line.substring(2, line.length())); return; }
+        if(command.equals("TL")) { turnLeft(line.substring(2, line.length())); return; }
+        if(command.equals("TR")) { turnRight(line.substring(2, line.length())); return; }
+      
+        /** Extra Features **/
+        if(command.equals("FO")) { fillOval(line.substring(2, line.length())); return; }
         
-        if (command.equals("FR"))
-        {
-            System.out.println(line);
-            fillRect(line.substring(2, line.length()));
-            return;
-        }
-        
-        if (command.equals("SC"))
-        {
-            System.out.println(line);
-            setColour(line.substring(3, line.length()));
-            return;
-        }
-        
-        if (command.equals("DS"))
-        {
-            System.out.println(line);
-            drawString(line.substring(3, line.length()));
-            return;
-        }
-        
-        if (command.equals("DA"))
-        {
-            System.out.println(line);
-            drawArc(line.substring(2, line.length()));
-            return;
-        }
-        
-        if (command.equals("DO"))
-        {
-            System.out.println(line);
-            drawOval(line.substring(2, line.length()));
-            return;
-        }
-        
-        if (command.equals("CG"))
-        {
-            System.out.println(line);
-            setColourGradient(line.substring(3, line.length()));
-            return;
-        }
-        
-        if(command.equals("DI"))
-        {
-            System.out.println(line);
-            drawImage(line.substring(2, line.length()));
-            return;
-        }
-        
-        if(command.equals("FO"))
-        {
-            System.out.println(line);
-            fillOval(line.substring(2, line.length()));
-            return;
-        } 
-        
-          if(command.equals("SS"))
-        {
-            System.out.println(line);
-            setSize(line.substring(2, line.length()));
-            return;
-        }
-          
-        if(command.equals("TP"))
-        {
-            System.out.println(line);
-            setPosition(line.substring(2, line.length()));
-            return;
-        }
-        
-        if(command.equals("TM"))
-        {
-            System.out.println(line);
-            moveForward(line.substring(2, line.length()));
-            return;
-        }
-        
-        if(command.equals("TL"))
-        {
-            System.out.println(line);
-            turnLeft(line.substring(2, line.length()));
-            return;
-        }
-        
-        if(command.equals("TR"))
-        {
-            System.out.println(line);
-            turnRight(line.substring(2, line.length()));
-            return;
-        }
-          
-        throw new ParseException("Unknown drawing command"); 
+        throw new ParseException("Drawing Command was not recognised."); 
     }
     
     private void setSize(String args) throws ParseException
@@ -222,7 +133,6 @@ public class Parser
         x2 = getInteger(tokenizer);
         y2 = getInteger(tokenizer);
         
-        System.out.println("DL" + x1 + "" + y1 + "" + x2 + "" + y2);
         image.drawLine(x1,y1,x2,y2);
     }
     
@@ -240,7 +150,6 @@ public class Parser
         x2 = getInteger(tokenizer);
         y2 = getInteger(tokenizer);
         
-        System.out.println("DR" + x1 + "" + y1 + "" + x2 + "" + y2);
         image.drawRect(x1,y1,x2,y2);
     }
     
@@ -257,8 +166,7 @@ public class Parser
         y1 = getInteger(tokenizer);
         x2 = getInteger(tokenizer);
         y2 = getInteger(tokenizer);
-        
-        System.out.println("FR" + x1 + "" + y1 + "" + x2 + "" + y2);
+       
         image.fillRect(x1, y1, x2, y2);
     }
     
@@ -279,7 +187,6 @@ public class Parser
         startAngle = getInteger(tokenizer);
         arcAngle = getInteger(tokenizer);
         
-        System.out.println("DA" + x + "" + y + "" + width + "" + height + "" + startAngle + "" + arcAngle);
         image.drawArc(x, y, width, height, startAngle, arcAngle);
     }
     
@@ -297,25 +204,7 @@ public class Parser
         width = getInteger(tokenizer);
         height = getInteger(tokenizer);
         
-        System.out.println("DO" + x1 + "" + y1 + "" + width + "" + height);
         image.drawOval(x1, y1, width, height);
-    }
-    
-       private void fillOval(String args) throws ParseException 
-    {
-        double x = 0.0; 
-        double y = 0.0; 
-        double width = 0.0; 
-        double height = 0.0; 
-        
-        StringTokenizer tokenizer = new StringTokenizer(args);
-        x = getDouble(tokenizer);
-        y = getDouble(tokenizer);
-        width = getDouble(tokenizer);
-        height = getDouble(tokenizer);
-        
-        System.out.println("FO" + x + "" + y + "" + width + "" + height);
-        image.fillOval(x, y, width, height);
     }
     
     private void drawString(String args) throws ParseException
@@ -335,8 +224,7 @@ public class Parser
         if (position == -1) throw new ParseException("DrawString string is missing");
         
         s = args.substring(position+1,args.length());
-    
-        System.out.println("DS" + x + "" + y + "" +s);
+   
         image.drawString(x,y,s);
     }
     
@@ -360,13 +248,11 @@ public class Parser
         if (position == -1) throw new ParseException("Image path is missing");
         pathWay = args.substring(position + 1);
 
-        System.out.println("DI" + "" + pathWay + "" + x + "" + y + "" +width+ "" + height);
         image.drawImage(pathWay, x, y, width, height);
     }
     
     private void setColour(String colourName) throws ParseException
     {
-        System.out.println("SC" + colourName);
         image.setColour(getColour(colourName));
         
         throw new ParseException("Invalid colour name");
@@ -393,7 +279,7 @@ public class Parser
         }
     }
     
-   private void setColourGradient(String colours) throws ParseException
+    private void setColourGradient(String colours) throws ParseException
     {
         String colour1 = ""; 
         String colour2 = ""; 
@@ -403,27 +289,27 @@ public class Parser
         colour1 = getString(tokenizer);
         colour2 = getString(tokenizer);
         
-        System.out.println("CG" + colour1 + "" + colour2);
         image.setColourGradient(getColour(colour1), getColour(colour2));
     }
     
-    private int getInteger(StringTokenizer tokenizer) throws ParseException
+    /** Extra Features **/
+    private void fillOval(String args) throws ParseException 
     {
-        if (tokenizer.hasMoreTokens()) return Integer.parseInt(tokenizer.nextToken());
-        else throw new ParseException("Missing Integer value");
-    }
-    
-    private String getString(StringTokenizer tokenizer) throws ParseException
-    {
-        if (tokenizer.hasMoreTokens()) return tokenizer.nextToken();
-        else throw new ParseException("Missing String value");
+        double x = 0.0; 
+        double y = 0.0; 
+        double width = 0.0; 
+        double height = 0.0; 
+        
+        StringTokenizer tokenizer = new StringTokenizer(args);
+        x = getDouble(tokenizer);
+        y = getDouble(tokenizer);
+        width = getDouble(tokenizer);
+        height = getDouble(tokenizer);
+        
+        image.fillOval(x, y, width, height);
     }
 
-    private double getDouble(StringTokenizer tokenizer) {
-        if(tokenizer.hasMoreTokens()) return Double.parseDouble(tokenizer.nextToken());
-        throw new UnsupportedOperationException("Missing Double Value");
-    }
-
+    /** TurtleGraphics Features **/
     private void setPosition(String args) throws ParseException
     {
        int x = 0; 
@@ -468,5 +354,30 @@ public class Parser
         angle = getInteger(tokenizer);
         
         image.getTurtleMode().turnRight(angle);    
+    }
+    
+    /** StringTokenizer Features **/
+    private int getInteger(StringTokenizer tokenizer) throws ParseException
+    {
+        if (tokenizer.hasMoreTokens()) 
+            return Integer.parseInt(tokenizer.nextToken());
+        else 
+            throw new ParseException("Missing Integer value");
+    }
+    
+    private String getString(StringTokenizer tokenizer) throws ParseException
+    {
+        if (tokenizer.hasMoreTokens()) 
+            return tokenizer.nextToken();
+        else 
+            throw new ParseException("Missing String value");
+    }
+
+    private double getDouble(StringTokenizer tokenizer) 
+    {
+        if(tokenizer.hasMoreTokens()) 
+            return Double.parseDouble(tokenizer.nextToken());
+        else
+            throw new UnsupportedOperationException("Missing Double Value");
     }
 }

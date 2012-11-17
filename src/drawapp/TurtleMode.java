@@ -2,8 +2,8 @@ package drawapp;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class TurtleMode {
-    
+public class TurtleMode
+{  
     private int x = 0; 
     private int y = 0; 
     private int angle = 0; 
@@ -22,8 +22,8 @@ public class TurtleMode {
     
     public void moveForward(int distance)
     {
-        int newX = (int) (x + (distance * Math.cos(angle)));
-        int newY = (int) (y - (distance * Math.sin(angle)));
+        int newX = (int) (x + (distance * Math.sin(angle)));
+        int newY = (int) (y - (distance * Math.cos(angle)));
         
         gc.strokeLine(x, y, newX, newY);
         
@@ -33,12 +33,11 @@ public class TurtleMode {
    
     public void turnLeft(int angle)
     {
-        this.angle -= angle; 
-        
+        this.angle -= angle;   
     }
     
     public void turnRight(int angle)
     {
-        this.angle += angle;
+        this.angle += (90-angle);
     }
 }

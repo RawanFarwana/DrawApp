@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
-import javafx.scene.shape.Polygon;
 
 public class ImagePanel
 {
@@ -90,8 +89,7 @@ public class ImagePanel
     public void drawImage(String pathWay, int x, int y, int width, int height)
     {  
        Image image = new Image(pathWay);
-       gc.drawImage(image,x,y,width,height);
-      
+       gc.drawImage(image,x,y,width,height); 
     }
     
     public void fillOval(double x, double y, double width, double height)
