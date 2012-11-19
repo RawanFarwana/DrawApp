@@ -51,7 +51,7 @@ void fillRect(int x1, int x2, int x3, int x4)
   printf("FR %i %i %i %i\n", x1, x2, x3, x4);
 }
 
-void drawString(char* s, int x, int y)
+void drawString(int x, int y, char* s)
 {
   printf("DS %i %i @%s\n",x,y,s);
 }

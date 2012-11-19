@@ -11,7 +11,7 @@ void drawRect(int,int,int,int);
 void drawOval(int,int,int,int);
 void drawArc(int,int,int,int,int,int);
 void fillRect(int,int,int,int);
-void drawString(char*,int,int);
+void drawString(int,int,char*);
 void drawImage(int, int,int,int,char*);
 void fillOval(double, double, double, double);
 

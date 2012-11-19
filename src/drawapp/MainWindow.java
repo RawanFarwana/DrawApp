@@ -53,9 +53,9 @@ public class MainWindow extends Application
     
     private void buildGUI()  
     {
-        scene = new Scene(borderPane, 1000, 600);
+        scene = new Scene(borderPane, 1000, 700);
         
-        canvas = new Canvas(500,300); //Default Canvas size
+        canvas = new Canvas(900,500); //Default Canvas size
        
         ScrollPane canvasSP = new ScrollPane();
         canvasSP.setContent(canvas); //Adds the Canvas to ScrollPane (for when canvas is enlarged)
@@ -133,7 +133,7 @@ public class MainWindow extends Application
         flow.setVgap(10);
         flow.setHgap(10);
         flow.setOrientation(Orientation.VERTICAL);
-        flow.getChildren().addAll(errorMessage, hbox); //Add both buttons and errorMessage scrollPane to FlowPane
+        flow.getChildren().addAll(scrollPane, hbox); //Add both buttons and errorMessage scrollPane to FlowPane
      
         borderPane.setCenter(canvasSP);   
         borderPane.setBottom(flow);
