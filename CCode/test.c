@@ -3,7 +3,7 @@
 
 int main(void) {
 
-  setSize(2000,1500);
+  setSize(900, 700);
   drawImage(150,0,700,500,"file:background.png"); 
   //Text
   setColourGradient("white","yellow");
@@ -17,8 +17,6 @@ int main(void) {
   setColourGradient("black","green");
   fillOval(455.0,175.0,10.0,10.0);
   fillOval(480.0,175.0,10.0,10.0);
-  setColourGradient("red","red");
-  drawArc(92, 50, 116, 116, 0, 160);
   drawArc(470,200,20,50,30,40);
   //Hands
   setColour(white); 
@@ -28,21 +26,6 @@ int main(void) {
   drawOval(472,235,10,10);
   drawOval(472,255,10,10);
   drawOval(472,275,10,10);
-  //Shining Star
-  setColourGradient("yellow","white");
-  setPosition(750,100);
-  moveForward(50);
-  // drawRect(400,160,450,140);
-  //setPosition(450,250);
-  //turnLeft(45);
-  //moveForward(100);
-  //setPosition(460,200);
-  //turnRight(50);
-  //moveForward(50);
-  //turnLeft(10);
-  //moveForward(10);
-  //turnRight(45); 
-
   return 0;
 }
 

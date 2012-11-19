@@ -44,40 +44,44 @@ public class MainWindow extends Application
     private ImagePanel imagePanel;
     private TextArea errorMessage;
     
-    private int width = 1000; 
-    private int height = 600;
+    private int width = 500; 
+    private int height = 300;
     
     BorderPane borderPane = new BorderPane();
+    ScrollPane canvasSP;
 
     private int counter = 0; //Initiliases counter for the image file name
 
     public void setWidth(int width)
     {
-        System.out.println(width);
         if(width > 100)
         { 
-            this.width = width;
+            //this.width = width;
+            canvas.setWidth(width);
         }
-        errorMessage.setText("Your width is too small");
+        else errorMessage.setText("Your width is too small");
     }
     
     public void setHeight(int height)
     {
-        System.out.println(height);
         if(height > 100)
         {
-            this.height = height;
+            //this.height = height;
+            canvas.setHeight(height);
         }
-        errorMessage.setText("Your height is too small");
+        else errorMessage.setText("Your height is too small");
     }
     
     private void buildGUI()  
     {
-        scene = new Scene(borderPane, width+500, height+300);
+        scene = new Scene(borderPane, 1000, 700);
         
-        canvas = new Canvas(width,height); //Default Canvas size
-       
-        ScrollPane canvasSP = new ScrollPane();
+        //canvas = new Canvas(width,height); //Default Canvas size
+        
+        canvas = new Canvas(500,300); //Default Canvas size
+        
+        canvasSP = new ScrollPane();
+        //ScrollPane canvasSP = new ScrollPane();
         canvasSP.setContent(canvas); //Adds the Canvas to ScrollPane (for when canvas is enlarged)
         
         errorMessage = new TextArea(); 

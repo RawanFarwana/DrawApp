@@ -21,14 +21,7 @@ public class ImagePanel
         gc = c.getGraphicsContext2D();
         turtleMode = new TurtleMode(gc);
     }
-    
-     /*
-    public void setSize(int width, int height)
-    {
-        canvas.setWidth(width);
-        canvas.setHeight(height);
-    }*/
-    
+
     protected void paintComponent(GraphicsContext gc)
     {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());   
