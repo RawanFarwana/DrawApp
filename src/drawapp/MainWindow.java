@@ -55,8 +55,7 @@ public class MainWindow extends Application
     public void setWidth(int width)
     {
         if(width > 100)
-        { 
-            //this.width = width;
+        {
             canvas.setWidth(width);
         }
         else errorMessage.setText("Your width is too small");
@@ -66,7 +65,6 @@ public class MainWindow extends Application
     {
         if(height > 100)
         {
-            //this.height = height;
             canvas.setHeight(height);
         }
         else errorMessage.setText("Your height is too small");
