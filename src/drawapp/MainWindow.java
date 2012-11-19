@@ -51,11 +51,32 @@ public class MainWindow extends Application
 
     private int counter = 0; //Initiliases counter for the image file name
     
+    public void setWidth(int width)
+    {
+        System.out.println(width);
+        if(width > 100)
+        { 
+            this.width = width;
+        }
+        errorMessage.setText("Your width is too small");
+    }
+    
+    public void setHeight(int height)
+    {
+        System.out.println(height);
+        if(height > 100)
+        {
+            this.height = height;
+        }
+        errorMessage.setText("Your height is too small");
+    }
+    
     private void buildGUI()  
     {
-        scene = new Scene(borderPane, 1000, 700);
+        System.out.println("HELLO:" + width + " " + height);
+        scene = new Scene(borderPane, width+500, height+300);
         
-        canvas = new Canvas(900,500); //Default Canvas size
+        canvas = new Canvas(width,height); //Default Canvas size
        
         ScrollPane canvasSP = new ScrollPane();
         canvasSP.setContent(canvas); //Adds the Canvas to ScrollPane (for when canvas is enlarged)
@@ -114,10 +135,12 @@ public class MainWindow extends Application
                     ImageIO.write(SwingFXUtils.fromFXImage(canvas.snapshot(null, null), null),
                             "png",new File("Image"+counter));
                     counter++; //Increments counter...so next time btn pressed it has a different count
+                    errorMessage.setText("Your drawing was successfully saved.");
                 }
                 catch(IOException ex)
                 {
-                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
+                    errorMessage.setText("Your drawing could not be saved.");
                 }
             }
         });

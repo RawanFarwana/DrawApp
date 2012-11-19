@@ -56,7 +56,7 @@ public class Parser
             if (line == null)
             {
                 System.out.println("No more lines to execute");
-                return -1;  //!!!!!!!!!!!!!!!!
+                return -1;  
             }
             parseLine(line);
         }
@@ -106,7 +106,7 @@ public class Parser
         throw new ParseException("Drawing Command was not recognised."); 
     }
     
-    private void setSize(String args) throws ParseException
+    private boolean setSize(String args) throws ParseException
     {
         int width = 0; 
         int height = 0; 
@@ -115,8 +115,13 @@ public class Parser
         
         width = getInteger(tokenizer);
         height = getInteger(tokenizer);
+      
+        System.out.println(width + " " + height);
+        frame.setWidth(width);
+        frame.setHeight(height);
+        //image.setSize(width, height);
         
-        image.setSize(width, height);
+        return true; 
     }
     
     private void drawLine(String args) throws ParseException

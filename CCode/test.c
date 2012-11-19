@@ -3,7 +3,7 @@
 
 int main(void) {
 
-  //setSize(1000,1000);
+  setSize(2000,1500);
   drawImage(150,0,700,500,"file:background.png"); 
   //Text
   setColourGradient("white","yellow");

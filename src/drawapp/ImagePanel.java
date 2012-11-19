@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.shape.ArcType;
 
 public class ImagePanel
 {
@@ -20,12 +21,14 @@ public class ImagePanel
         gc = c.getGraphicsContext2D();
         turtleMode = new TurtleMode(gc);
     }
-     
+    
+    
+     /*
     public void setSize(int width, int height)
     {
         canvas.setWidth(width);
         canvas.setHeight(height);
-    }
+    }*/
     
     protected void paintComponent(GraphicsContext gc)
     {
@@ -78,7 +81,7 @@ public class ImagePanel
     
     public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle)
     {
-        gc.arc(x, y, width, height, startAngle, arcAngle);
+        gc.strokeArc(x, y, width, height, startAngle, arcAngle, ArcType.OPEN);
     }
     
     public void drawOval(int x, int y, int width, int height)
