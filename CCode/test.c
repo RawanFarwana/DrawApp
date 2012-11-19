@@ -21,7 +21,7 @@ int main(void) {
   drawArc(92, 50, 116, 116, 0, 160);
   drawArc(470,200,20,50,30,40);
   //Hands
-  //setColour(); 
+  setColour(white); 
   drawLine(440,240,395,200);  
   drawLine(520,240,565,200);
   //Accessories

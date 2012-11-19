@@ -116,7 +116,6 @@ public class Parser
         width = getInteger(tokenizer);
         height = getInteger(tokenizer);
       
-        System.out.println(width + " " + height);
         frame.setWidth(width);
         frame.setHeight(height);
         //image.setSize(width, height);
@@ -258,7 +257,24 @@ public class Parser
     
     private void setColour(String colourName) throws ParseException
     {
-        image.setColour(getColour(colourName));
+       // image.setColour(getColour(colourName));
+   //      private void setColour(String colourName) throws ParseException
+  
+    if (colourName.equals("black")) { image.setColour(Color.BLACK); return;}
+    if (colourName.equals("blue")) { image.setColour(Color.BLUE); return;}
+    if (colourName.equals("cyan")) { image.setColour(Color.CYAN); return;}
+    if (colourName.equals("darkgray")) { image.setColour(Color.DARKGRAY); return;}
+    if (colourName.equals("gray")) { image.setColour(Color.GRAY); return;}
+    if (colourName.equals("green")) { image.setColour(Color.GREEN); return;}
+    if (colourName.equals("lightgray")) { image.setColour(Color.LIGHTGRAY); return;}
+    if (colourName.equals("magenta")) { image.setColour(Color.MAGENTA); return;}
+    if (colourName.equals("orange")) { image.setColour(Color.ORANGE); return;}
+    if (colourName.equals("pink")) { image.setColour(Color.PINK); return;}
+    if (colourName.equals("red")) { image.setColour(Color.RED); return;}
+    if (colourName.equals("white")) { image.setColour(Color.WHITE); return;}
+    if (colourName.equals("yellow")) { image.setColour(Color.YELLOW); return;}
+    //throw new ParseException("Invalid colour name");
+  //}
         
         throw new ParseException("Invalid colour name");
     }

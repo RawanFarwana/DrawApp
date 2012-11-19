@@ -44,13 +44,13 @@ public class MainWindow extends Application
     private ImagePanel imagePanel;
     private TextArea errorMessage;
     
-    private int width; 
-    private int height;
+    private int width = 1000; 
+    private int height = 600;
     
     BorderPane borderPane = new BorderPane();
 
     private int counter = 0; //Initiliases counter for the image file name
-    
+
     public void setWidth(int width)
     {
         System.out.println(width);
@@ -73,7 +73,6 @@ public class MainWindow extends Application
     
     private void buildGUI()  
     {
-        System.out.println("HELLO:" + width + " " + height);
         scene = new Scene(borderPane, width+500, height+300);
         
         canvas = new Canvas(width,height); //Default Canvas size

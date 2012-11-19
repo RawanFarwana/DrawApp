@@ -22,7 +22,6 @@ public class ImagePanel
         turtleMode = new TurtleMode(gc);
     }
     
-    
      /*
     public void setSize(int width, int height)
     {
